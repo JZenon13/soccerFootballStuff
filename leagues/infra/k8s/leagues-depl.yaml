@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: leagues
-          image: rallycoding/leagues
+          image: jzenon/leagues
           resources:
             requests:
               memory: "300Mi"

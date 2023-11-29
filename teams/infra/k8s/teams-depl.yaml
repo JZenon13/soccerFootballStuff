@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: teams
-          image: rallycoding/teams
+          image: jzenon/teams
           resources:
             requests:
               memory: "300Mi"
