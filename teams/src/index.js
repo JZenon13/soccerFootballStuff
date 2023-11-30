@@ -5,9 +5,21 @@ const Team = require("../src/models/team");
 const { seedTeams } = require("../seed");
 
 const start = async () => {
+  if (!process.env.MONGO_URI) {
+    throw new Error("MONGO_URI must be defined");
+  }
+  if (!process.env.RABBITMQ_URI) {
+    throw new Error("RABBITMQ_URI must be defined");
+  }
   try {
+    await rabbitMQWrapper.createConnection(process.env.RABBITMQ_URI, []);
+    rabbitMQWrapper.channel.on("close", () => {
+      console.log("RabbitMQ connection closed");
+      process.exit();
+    });
     process.on("SIGINT", async () => {
       try {
+        await rabbitMQWrapper.connection.close();
         await connection.close();
       } catch (err) {
         console.error(err);
@@ -15,6 +27,7 @@ const start = async () => {
     });
     process.on("SIGTERM", async () => {
       try {
+        await rabbitMQWrapper.connection.close();
         await connection.close();
       } catch (err) {
         console.error(err);

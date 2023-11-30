@@ -1,0 +1,24 @@
+apiVersion: skaffold/v4beta4
+kind: Config
+metadata:
+  name: teams-svc
+build:
+  artifacts:
+    - image: jzenon/teams
+      context: .
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+portForward:
+  - resourceType: service
+    resourceName: teams-svc
+    port: 3003
+  - resourceType: service
+    resourceName: teams-mongo-svc
+    port: 27020
+manifests:
+  rawYaml:
+    - ./infra/k8s/*

@@ -1,0 +1,24 @@
+apiVersion: skaffold/v4beta4
+kind: Config
+metadata:
+  name: leagues-svc
+build:
+  artifacts:
+    - image: jzenon/leagues
+      context: .
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+portForward:
+  - resourceType: service
+    resourceName: leagues-svc
+    port: 3001
+  - resourceType: service
+    resourceName: leagues-mongo-svc
+    port: 27018
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
