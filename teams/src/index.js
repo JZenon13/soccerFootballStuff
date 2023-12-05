@@ -3,6 +3,7 @@ require("dotenv").config();
 const app = require("./app.js");
 const Team = require("../src/models/team");
 const { seedTeams } = require("../seed");
+const rabbitMQWrapper = require("./events/rabbitMQWrapper");
 
 const start = async () => {
   if (!process.env.MONGO_URI) {
@@ -48,7 +49,7 @@ const start = async () => {
   }
 
   app.listen(3000, () => {
-    console.log("Teams service listening on port 3000");
+    console.log("Teams service listening on port 3003");
   });
 };
 
