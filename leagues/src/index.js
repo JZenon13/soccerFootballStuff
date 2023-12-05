@@ -12,6 +12,7 @@ const start = async () => {
   if (!process.env.RABBITMQ_URI) {
     throw new Error("RABBITMQ_URI must be defined");
   }
+
   try {
     await rabbitMQWrapper.createConnection(process.env.RABBITMQ_URI, []);
     rabbitMQWrapper.channel.on("close", () => {
@@ -49,7 +50,7 @@ const start = async () => {
   }
 
   app.listen(3000, () => {
-    console.log("Leagues service listening on port 3000");
+    console.log("Leagues service listening on port 3001");
   });
 };
 

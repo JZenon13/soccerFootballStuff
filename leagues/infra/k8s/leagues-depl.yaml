@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: leagues-depl
+  name: soccerfootballstuff-leagues-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: leagues
+      app: soccerfootballstuff-leagues
   template:
     metadata:
       labels:
-        app: leagues
+        app: soccerfootballstuff-leagues
     spec:
       containers:
-        - name: leagues
-          image: jzenon/leagues
+        - name: soccerfootballstuff-leagues
+          image: jzenon13/soccerfootballstuff-leagues
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
               memory: "300Mi"
@@ -22,19 +23,16 @@ spec:
             limits:
               memory: "600Mi"
               cpu: "1"
-          env:
-            - name: RABBITMQ_URI
-              value: "amqp://soccerfootballstuff-rabbitmq-svc:5672"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: leagues-svc
+  name: soccerfootballstuff-leagues-svc
 spec:
   selector:
-    app: leagues
+    app: soccerfootballstuff-leagues
   ports:
-    - name: leagues
+    - name: soccerfootballstuff-leagues
       protocol: TCP
       port: 3001
       targetPort: 3000
