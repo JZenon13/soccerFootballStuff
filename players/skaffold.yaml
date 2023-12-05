@@ -1,10 +1,10 @@
 apiVersion: skaffold/v4beta4
 kind: Config
 metadata:
-  name: players-svc
+  name: soccerfootballstuff-players-svc
 build:
   artifacts:
-    - image: jzenon/players
+    - image: jzenon13/soccerfootballstuff-players
       context: .
       sync:
         manual:
@@ -14,11 +14,8 @@ build:
         dockerfile: Dockerfile
 portForward:
   - resourceType: service
-    resourceName: players-svc
+    resourceName: soccerfootballstuff-players-svc
     port: 3002
-  - resourceType: service
-    resourceName: players-mongo-svc
-    port: 27019
 manifests:
   rawYaml:
     - ./infra/k8s/*
